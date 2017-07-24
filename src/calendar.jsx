@@ -41,6 +41,7 @@ export default class Calendar extends React.Component {
     monthsShown: PropTypes.number,
     onClickOutside: PropTypes.func.isRequired,
     onMonthChange: PropTypes.func,
+    onYearChange: PropTypes.func,
     forceShowMonthNavigation: PropTypes.bool,
     onDropdownFocus: PropTypes.func,
     onSelect: PropTypes.func.isRequired,
@@ -146,10 +147,16 @@ export default class Calendar extends React.Component {
     }
   }
 
+  handleYearChange = (data) => {
+    if (this.props.onYearChange) {
+      this.props.onYearChange(date)
+    }
+  }
+
   changeYear = (year) => {
     this.setState({
       date: this.state.date.clone().set('year', year)
-    })
+    }, () => this.handleYearChange(this.state.date))
   }
 
   changeMonth = (month) => {
